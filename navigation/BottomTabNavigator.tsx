@@ -99,15 +99,6 @@ export default function BottomTabNavigator() {
   );
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>["name"];
-  color: string;
-}) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
-
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeStack = createStackNavigator<TabParamList>();
@@ -116,9 +107,9 @@ function HomeNavigator() {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
+        options={{ headerShown: false }}
         name="Home"
         component={Home}
-        options={{ headerTitle: "Home" }}
       />
     </HomeStack.Navigator>
   );
@@ -132,7 +123,7 @@ function PortfolioStackNavigator() {
       <PortfolioStack.Screen
         name="Portfolio"
         component={Home}
-        options={{ headerTitle: "Portfolio" }}
+        options={{ headerShown: false }}
       />
     </PortfolioStack.Navigator>
   );
@@ -146,7 +137,7 @@ function TransactionStackNavigator() {
       <TransactionStack.Screen
         name="Transaction"
         component={Home}
-        options={{ headerTitle: "Transaction" }}
+        options={{ headerShown: false }}
       />
     </TransactionStack.Navigator>
   );
@@ -160,7 +151,7 @@ function PricesStackNavigator() {
       <PricesStack.Screen
         name="Prices"
         component={Home}
-        options={{ headerTitle: "Price" }}
+        options={{ headerShown: false }}
       />
     </PricesStack.Navigator>
   );
@@ -174,7 +165,7 @@ function SettingStackNavigator() {
       <SettingStack.Screen
         name="Settings"
         component={Home}
-        options={{ headerTitle: "Setting" }}
+        options={{ headerShown: false }}
       />
     </SettingStack.Navigator>
   );
