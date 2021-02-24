@@ -1,7 +1,8 @@
 import React from "react";
 import { FlatList } from "react-native";
-import { TrendingItem } from ".";
+
 import { SIZES } from "../../constants";
+import TrendingItem from "./TrendingItem";
 
 const TrendingList = ({ trending }: any) => {
   return (

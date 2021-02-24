@@ -47,4 +47,4 @@ const TrendingItem = ({ item, index }: any) => {
   );
 };
 
-export default TrendingItem;
+export default React.memo(TrendingItem);
