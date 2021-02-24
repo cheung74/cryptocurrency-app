@@ -2,6 +2,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { Image } from "react-native";
+import { TabButton, TabCustomButton } from "../components/BottomTab";
+import { COLORS, icons } from "../constants";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { Home } from "../screens";
@@ -15,14 +18,27 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+        showLabel: false,
+        style: {
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          left: 0,
+          elevation: 0,
+          backgroundColor: COLORS.white,
+          borderTopColor: "transparent",
+          height: 100,
+        },
+      }}
     >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabButton focused={focused} text="home" icon={icons.home} />
           ),
         }}
       />
@@ -30,8 +46,12 @@ export default function BottomTabNavigator() {
         name="Portfolio"
         component={PortfolioStackNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabButton
+              focused={focused}
+              text="portfolio"
+              icon={icons.pie_chart}
+            />
           ),
         }}
       />
@@ -39,17 +59,26 @@ export default function BottomTabNavigator() {
         name="Transaction"
         component={TransactionStackNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+          tabBarIcon: () => (
+            <Image
+              source={icons.transaction}
+              resizeMode="contain"
+              style={{ width: 30, height: 30, tintColor: COLORS.white }}
+            />
           ),
+          tabBarButton: (props) => <TabCustomButton {...props} />,
         }}
       />
       <BottomTab.Screen
         name="Prices"
         component={PricesStackNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabButton
+              text="prices"
+              icon={icons.line_graph}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -57,8 +86,12 @@ export default function BottomTabNavigator() {
         name="Settings"
         component={SettingStackNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabButton
+              text="settings"
+              focused={focused}
+              icon={icons.settings}
+            />
           ),
         }}
       />
