@@ -12,25 +12,29 @@ import {
 import { HomeBalance, HomeHeaderBar, TrendingList } from "../components/Home";
 import { TransactionHistory } from "../components/TransactionHistory";
 import { PriceAlert } from "../components/PriceAlert";
-import { COLORS, dummyData, FONTS, images, SIZES } from "../constants";
-import { RootStackParamList } from "../types";
+import { COLORS, dummyData, FONTS, images, SIZES, SHADOW } from "../constants";
+
+/* Type for navigation
 
 type HomeScreenNavProp = StackNavigationProp<
   RootStackParamList,
   "CryptoDetail"
 >;
-
-const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
+{ navigation }: { navigation: HomeScreenNavProp }
+*/
+const Home = () => {
   const [trending, setTrending] = React.useState(dummyData.trendingCurrencies);
   const [transactionHistory, setTransactionHistory] = React.useState(
     dummyData.transactionHistory
   );
+
   React.useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
+
   const renderHeader = () => {
     return (
-      <View style={{ width: "100%", height: 290, ...styles.shadow }}>
+      <View style={{ width: "100%", height: 290, ...SHADOW.primary }}>
         <ImageBackground
           source={images.banner}
           resizeMode="cover"
@@ -61,7 +65,7 @@ const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
             >
               Trending
             </Text>
-            <TrendingList {...{ trending, navigation }} />
+            <TrendingList {...{ trending }} />
           </View>
         </ImageBackground>
       </View>
@@ -80,7 +84,7 @@ const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
           padding: 20,
           borderRadius: SIZES.radius,
           backgroundColor: COLORS.secondary,
-          ...styles.shadow,
+          ...SHADOW.primary,
         }}
       >
         <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
@@ -119,7 +123,7 @@ const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
   const renderTransactionHistory = () => {
     return (
       <TransactionHistory
-        customContainerStyle={{ ...styles.shadow }}
+        customContainerStyle={{ ...SHADOW.primary }}
         history={transactionHistory}
       />
     );
@@ -136,23 +140,4 @@ const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-
-    elevation: 8,
-  },
-});
-
-export default Home;
+export default React.memo(Home);

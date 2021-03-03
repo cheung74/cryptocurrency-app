@@ -1,19 +1,22 @@
 import React from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
   FlatList,
-  TouchableOpacity,
   Image,
+  StyleSheetProperties,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { COLORS, FONTS, icons, SIZES } from "../../constants";
 
-import { COLORS, SIZES, FONTS, icons } from "../../constants";
-
-export default function TransactionHistory({
+type Props = {
+  customContainerStyle: StyleSheetProperties;
+  history: any[];
+};
+const TransactionHistory: React.FC<Props> = ({
   customContainerStyle,
   history,
-}: any) {
+}) => {
   const renderItem = ({ item }: any) => (
     <TouchableOpacity
       style={{
@@ -84,4 +87,6 @@ export default function TransactionHistory({
       />
     </View>
   );
-}
+};
+
+export default React.memo(TransactionHistory);

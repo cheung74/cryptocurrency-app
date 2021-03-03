@@ -1,8 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import { COLORS, SIZES, FONTS, icons } from "../../constants";
+import {
+  Image,
+  StyleSheetProperties,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { COLORS, FONTS, icons, SHADOW, SIZES } from "../../constants";
 
-export default function PriceAlert({ customContainerStyle }: any) {
+const PriceAlert: React.FC<{ customContainerStyle: StyleSheetProperties }> = ({
+  customContainerStyle,
+}) => {
   return (
     <TouchableOpacity
       style={{
@@ -15,7 +23,7 @@ export default function PriceAlert({ customContainerStyle }: any) {
         backgroundColor: COLORS.white,
         borderRadius: SIZES.radius,
         ...customContainerStyle,
-        ...styles.shadow,
+        ...SHADOW.primary,
       }}
     >
       <Image
@@ -35,17 +43,6 @@ export default function PriceAlert({ customContainerStyle }: any) {
       />
     </TouchableOpacity>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 8,
-  },
-});
+export default React.memo(PriceAlert);

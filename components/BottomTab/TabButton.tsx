@@ -32,4 +32,4 @@ const TabButton = ({ focused, text, icon }: props) => {
   );
 };
 
-export default TabButton;
+export default React.memo(TabButton);

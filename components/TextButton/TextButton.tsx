@@ -1,14 +1,20 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { StyleSheetProperties, Text, TouchableOpacity } from "react-native";
+import { COLORS, FONTS, SIZES } from "../../constants";
 
-import { COLORS, SIZES, FONTS } from "../../constants";
+type Props = {
+  label: string;
+  customContainerStyle: StyleSheetProperties;
+  customLabelStyle: StyleSheetProperties;
+  onPress: () => void;
+};
 
-const TextButton = ({
+const TextButton: React.FC<Props> = ({
   label,
   customContainerStyle,
   customLabelStyle,
   onPress,
-}: any) => {
+}) => {
   return (
     <TouchableOpacity
       style={{
@@ -28,4 +34,4 @@ const TextButton = ({
   );
 };
 
-export default TextButton;
+export default React.memo(TextButton);

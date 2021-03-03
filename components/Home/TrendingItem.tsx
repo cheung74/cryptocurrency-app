@@ -1,8 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONTS, SIZES } from "../../constants";
 
-const TrendingItem = ({ item, index, navigation }: any) => {
+const TrendingItem: React.FC<any> = ({ item, index }) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={{

@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import { COLORS, SIZES, FONTS } from "../../constants";
-const CurrencyLabel = ({ icon, currency, code }: any) => {
+
+const CurrencyLabel: React.FC = ({ icon, currency, code }: any) => {
   return (
     <View style={{ flexDirection: "row" }}>
       <Image
@@ -27,4 +28,4 @@ const CurrencyLabel = ({ icon, currency, code }: any) => {
   );
 };
 
-export default CurrencyLabel;
+export default React.memo(CurrencyLabel);

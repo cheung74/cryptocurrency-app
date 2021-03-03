@@ -1,16 +1,15 @@
 import React from "react";
 import { FlatList } from "react-native";
-
 import { SIZES } from "../../constants";
 import TrendingItem from "./TrendingItem";
 
-const TrendingList = ({ trending, navigation }: any) => {
+const TrendingList: React.FC<{ trending: any }> = ({ trending }) => {
   return (
     <FlatList
       contentContainerStyle={{ marginTop: SIZES.base }}
       data={trending}
       renderItem={({ item, index }: any) => (
-        <TrendingItem {...{ item, index, navigation }} />
+        <TrendingItem {...{ item, index }} />
       )}
       keyExtractor={(item) => `${item.id}`}
       horizontal
@@ -19,4 +18,4 @@ const TrendingList = ({ trending, navigation }: any) => {
   );
 };
 
-export default TrendingList;
+export default React.memo(TrendingList);

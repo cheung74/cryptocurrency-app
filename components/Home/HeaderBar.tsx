@@ -1,8 +1,8 @@
 import React from "react";
-import { TouchableOpacity, View, Image } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { icons, SIZES } from "../../constants";
 
-export default function HomeHeaderBar() {
+const HomeHeaderBar = () => {
   return (
     <View
       style={{
@@ -29,4 +29,6 @@ export default function HomeHeaderBar() {
       </TouchableOpacity>
     </View>
   );
-}
+};
+
+export default React.memo(HomeHeaderBar);

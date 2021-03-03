@@ -2,13 +2,11 @@ import React from "react";
 import { Text, View } from "react-native";
 import { COLORS, FONTS, SIZES } from "../../constants";
 
-export default function Balance({
-  balance,
-  changes,
-}: {
+type Props = {
   balance: string;
   changes: string;
-}) {
+};
+const Balance: React.FC<Props> = ({ balance, changes }) => {
   return (
     <View
       style={{
@@ -33,4 +31,6 @@ export default function Balance({
       </Text>
     </View>
   );
-}
+};
+
+export default React.memo(Balance);

@@ -3,7 +3,9 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONTS, icons, SIZES } from "../../constants";
 
-const HeaderBar = ({ right }: any) => {
+type Props = { right: boolean };
+
+const HeaderBar: React.FC<Props> = ({ right }) => {
   const navigation = useNavigation();
 
   return (
@@ -17,12 +19,12 @@ const HeaderBar = ({ right }: any) => {
             source={icons.back_arrow}
             resizeMode="contain"
             style={{
-              width: 25,
-              height: 25,
+              width: 20,
+              height: 20,
               tintColor: COLORS.gray,
             }}
           />
-          <Text style={{ marginLeft: SIZES.base, ...FONTS.h2 }}>Back</Text>
+          <Text style={{ marginLeft: SIZES.base, ...FONTS.h3 }}>Back</Text>
         </TouchableOpacity>
       </View>
       {right && (
@@ -31,7 +33,7 @@ const HeaderBar = ({ right }: any) => {
             <Image
               source={icons.star}
               resizeMode="contain"
-              style={{ width: 30, height: 30 }}
+              style={{ width: 20, height: 20 }}
             />
           </TouchableOpacity>
         </View>
@@ -40,4 +42,4 @@ const HeaderBar = ({ right }: any) => {
   );
 };
 
-export default HeaderBar;
+export default React.memo(HeaderBar);

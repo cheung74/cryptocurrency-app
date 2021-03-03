@@ -1,30 +1,26 @@
+import { useRoute } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  Image,
-  ScrollView,
   Animated,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
-
 import {
-  VictoryScatter,
-  VictoryLine,
-  VictoryChart,
   VictoryAxis,
+  VictoryChart,
+  VictoryLine,
+  VictoryScatter,
 } from "victory-native";
-
-import { VictoryCustomTheme } from "../styles";
-
-import { dummyData, SIZES, FONTS, icons, COLORS } from "../constants";
-
-import { HeaderBar } from "../components/HeaderBar";
 import { CurrencyLabel } from "../components/CurrencyLabel";
-import { useRoute } from "@react-navigation/native";
+import { HeaderBar } from "../components/HeaderBar";
+import { PriceAlert } from "../components/PriceAlert";
 import { TextButton } from "../components/TextButton";
+import { COLORS, dummyData, FONTS, icons, SHADOW, SIZES } from "../constants";
+import { VictoryCustomTheme } from "../styles";
 
 const CryptoDetail = ({ navigation }: any) => {
   const scrollX = new Animated.Value(0);
@@ -40,7 +36,7 @@ const CryptoDetail = ({ navigation }: any) => {
 
   const route = useRoute();
   const { currency }: any = route.params;
-  const renderChar = () => {
+  const renderChart = () => {
     return (
       <View
         style={{
@@ -49,7 +45,7 @@ const CryptoDetail = ({ navigation }: any) => {
           alignItems: "center",
           borderRadius: SIZES.radius,
           backgroundColor: COLORS.white,
-          ...styles.shadow,
+          ...SHADOW.primary,
         }}
       >
         {/* Header */}
@@ -182,8 +178,127 @@ const CryptoDetail = ({ navigation }: any) => {
           ))}
         </View>
         {/* Dots */}
+        {renderDots()}
+      </View>
+    );
+  };
 
-        
+  const renderDots = () => {
+    const dotPosition = Animated.divide(scrollX, SIZES.width);
+    return (
+      <View style={{ height: 30, marginTop: 15 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {numberOfCharts.map((item, index) => {
+            const opacity = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: "clamp",
+            });
+            const dotSize = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [SIZES.base * 0.8, 10, SIZES.base * 0.8],
+              extrapolate: "clamp",
+            });
+            const dotColor = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [COLORS.gray, COLORS.primary, COLORS.gray],
+              extrapolate: "clamp",
+            });
+            return (
+              <Animated.View
+                key={`dot-${index}`}
+                {...{ opacity }}
+                style={{
+                  borderRadius: SIZES.radius,
+                  marginHorizontal: 6,
+                  width: dotSize,
+                  height: dotSize,
+                  backgroundColor: dotColor,
+                }}
+              />
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+  const renderBuy = () => {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          marginHorizontal: SIZES.radius,
+          padding: SIZES.padding,
+          borderRadius: SIZES.radius,
+          backgroundColor: COLORS.white,
+          ...SHADOW.primary,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: SIZES.radius,
+          }}
+        >
+          {/* Currency */}
+          <View style={{ flex: 1 }}>
+            <CurrencyLabel
+              icon={currency?.image}
+              currency={`${currency?.currency} Wallet`}
+              code={currency?.code}
+            />
+          </View>
+          {/* Amount */}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ marginRight: SIZES.base }}>
+              <Text style={{ ...FONTS.h3 }}>${currency?.wallet.value}</Text>
+              <Text
+                style={{
+                  textAlign: "right",
+                  color: COLORS.gray,
+                  ...FONTS.body4,
+                }}
+              >
+                {currency?.wallet.crypto} {currency?.code}
+              </Text>
+            </View>
+            <Image
+              source={icons.right_arrow}
+              resizeMode="cover"
+              style={{ width: 20, height: 20, tintColor: COLORS.gray }}
+            />
+          </View>
+        </View>
+        <TextButton
+          label={"Buy"}
+          onPress={() => navigation.navigate("Transaction", { currency })}
+        />
+      </View>
+    );
+  };
+  const renderAbout = () => {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          marginHorizontal: SIZES.radius,
+          padding: SIZES.radius,
+          borderRadius: SIZES.radius,
+          backgroundColor: COLORS.white,
+          ...SHADOW.primary,
+        }}
+      >
+        <Text style={{ ...FONTS.h3 }}>About {currency.currency}</Text>
+        <Text style={{ marginTop: SIZES.base, ...FONTS.body3 }}>
+          {currency?.description}
+        </Text>
       </View>
     );
   };
@@ -194,6 +309,7 @@ const CryptoDetail = ({ navigation }: any) => {
         backgroundColor: COLORS.lightGray1,
       }}
     >
+      <StatusBar style="dark" />
       <HeaderBar right />
       <ScrollView>
         <View
@@ -202,30 +318,19 @@ const CryptoDetail = ({ navigation }: any) => {
             paddingBottom: SIZES.padding,
           }}
         >
-          {renderChar()}
+          {renderChart()}
+          {renderBuy()}
+          {renderAbout()}
+          <PriceAlert
+            customContainerStyle={{
+              marginTop: SIZES.padding,
+              marginHorizontal: SIZES.radius,
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-
-    elevation: 8,
-  },
-});
-
-export default CryptoDetail;
+export default React.memo(CryptoDetail);
