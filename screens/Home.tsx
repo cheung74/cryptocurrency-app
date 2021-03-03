@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  LogBox
+  LogBox,
 } from "react-native";
 import { HomeBalance, HomeHeaderBar, TrendingList } from "../components/Home";
 import { TransactionHistory } from "../components/TransactionHistory";
@@ -25,9 +25,9 @@ const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
   const [transactionHistory, setTransactionHistory] = React.useState(
     dummyData.transactionHistory
   );
-  React.useEffect(()=>{
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested'])
-  },[])
+  React.useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
   const renderHeader = () => {
     return (
       <View style={{ width: "100%", height: 290, ...styles.shadow }}>
@@ -61,7 +61,7 @@ const Home = ({ navigation }: { navigation: HomeScreenNavProp }) => {
             >
               Trending
             </Text>
-            <TrendingList {...{ trending }} />
+            <TrendingList {...{ trending, navigation }} />
           </View>
         </ImageBackground>
       </View>

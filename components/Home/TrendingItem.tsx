@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { COLORS, FONTS, SIZES } from "../../constants";
 
-const TrendingItem = ({ item, index }: any) => {
+const TrendingItem = ({ item, index, navigation }: any) => {
   return (
     <TouchableOpacity
       style={{
@@ -14,6 +14,7 @@ const TrendingItem = ({ item, index }: any) => {
         borderRadius: 10,
         backgroundColor: COLORS.white,
       }}
+      onPress={() => navigation.navigate("CryptoDetail", { currency: item })}
     >
       {/* currency */}
       <View style={{ flexDirection: "row" }}>
